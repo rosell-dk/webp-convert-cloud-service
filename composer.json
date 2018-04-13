@@ -1,0 +1,30 @@
+{
+  "name": "rosell-dk/webp-convert-cloud-service",
+  "description": "Cloud service for converting JPEG & PNG to WebP",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["webp", "images", "cwebp", "imagick", "gd", "jpg2webp", "png2webp", "jpg", "png", "image conversion"],
+  "scripts": {
+    "cs-fix": "php-cs-fixer fix",
+    "cs-dry": "php-cs-fixer fix --dry-run --diff",
+    "test": "phpunit"
+  },
+  "autoload": {
+    "psr-4": { "WebPConvertCS\\": "" }
+  },
+  "authors": [
+    {
+      "name": "Bjørn Rosell",
+      "homepage": "https://www.bitwise-it.dk/contact",
+      "role": "Project Author"
+    }
+  ],
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.11",
+    "phpunit/phpunit": "5.7.27"
+  },
+  "require": {
+    "rosell-dk/webp-convert": "1.*@beta",
+    "mustangostang/spyc": "^0.6.2"
+  }
+}
