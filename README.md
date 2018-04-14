@@ -7,13 +7,12 @@ The actual conversion is handled by [webp-convert](https://github.com/rosell-dk/
 
 You can configure the library in the yaml file.
 
-It is work in progress. I expect a lot of progress the following weeks.
+The script is functional, but is under construction. I expect a lot of progress the following weeks.
 
-Upcoming: Protection against exploitation 
+Upcoming: Protection against exploitation
 
 - *Allowed hosts* option
 - Optional crypt and decrypt of file checksom with secret salt. The secret must be set on both the client and the web service. The secret is thus not transmitted. Eardropping on the HTTP request will only allow the eardropper to use the service for converting that specific file.
 
 Upcoming:
 Error handling (JSON responses)
-
