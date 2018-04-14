@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 
 use WebPConvert\WebPConvert;
 
-$options = Spyc::YAMLLoad('webp-convert-cs-config.yaml');
+$options = Spyc::YAMLLoad('wccs.yaml');
 
 
 
