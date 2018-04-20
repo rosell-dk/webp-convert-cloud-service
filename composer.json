@@ -7,7 +7,10 @@
   "scripts": {
     "cs-fix": "php-cs-fixer fix",
     "cs-dry": "php-cs-fixer fix --dry-run --diff",
-    "test": "phpunit"
+    "test": "phpunit",
+    "post-root-package-install": [
+      "@php -r \"file_exists('config.yaml') || copy('config.yaml.example', 'config.yaml');\""
+    ]
   },
   "autoload": {
     "psr-4": { "WebPConvertCS\\": "" }

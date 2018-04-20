@@ -7,12 +7,79 @@ require 'vendor/autoload.php';
 
 use WebPConvert\WebPConvert;
 
-$options = Spyc::YAMLLoad('wccs.yaml');
+//define("ERROR_CONFIGURATION", 1);
+const ERROR_SERVER_SETUP = 0;
+const ERROR_NOT_ALLOWED = 1;
 
 
+// TODO: Ensure that config.yaml will not be removed on composer update
+
+// TODO: read up on https://getcomposer.org/doc/06-config.md
+
+function exitWithError($errorCode, $msg)
+{
+    $returnObject = array(
+        'success' => 0,
+        'errorCode' => $errorCode,
+        'errorMessage' => $msg,
+    );
+    echo json_encode($returnObject);
+    exit;
+}
+
+
+try {
+    $options = \Spyc::YAMLLoad('config.yaml');
+} catch (\Exception $e) {
+    exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found. Copy config.yaml.example and edit it');
+}
+
+// TODO: read this: https://cloudinary.com/blog/file_upload_with_php
+// https://www.tutorialspoint.com/php/php_file_uploading.htm
+// https://www.sitepoint.com/file-uploads-with-php/ (read "security considerations")
+// TODO: PHP upload limits etc
 
 //print_r($_POST);
 //print_r($_FILES);
+
+//echo $_SERVER['REQUEST_METHOD'];
+
+//echo $_SERVER['REMOTE_HOST'];
+//exit;
+
+if (isset($options['access']['allowed-ips']) && count($options['access']['allowed-ips']) > 0) {
+    $ipCheckPassed = false;
+    foreach ($options['access']['allowed-ips'] as $ip) {
+        if ($ip == $_SERVER['REMOTE_ADDR']) {
+            $ipCheckPassed = true;
+            break;
+        }
+    }
+    if (!$ipCheckPassed) {
+        exitWithError(ERROR_NOT_ALLOWED, 'Restricted access. Not on IP whitelist');
+    }
+}
+
+if (isset($options['access']['allowed-hosts']) && count($options['access']['allowed-hosts']) > 0) {
+    $h = $_SERVER['REMOTE_HOST'];
+    if ($h == '') {
+        // Alternatively, we could catch the notice...
+        exitWithError(ERROR_SERVER_SETUP, 'WCCS is configured with allowed-hosts option. But the server is not set up to resolve host names. For example in Apache you will need HostnameLookups On inside httpd.conf. See also PHP documentation on gethostbyaddr().');
+    }
+    $hostCheckPassed = false;
+    foreach ($options['access']['allowed-hosts'] as $hostName) {
+        if ($hostName == $_SERVER['REMOTE_HOST']) {
+            $hostCheckPassed = true;
+            break;
+        }
+    }
+    if (!$hostCheckPassed) {
+        exitWithError(ERROR_NOT_ALLOWED, 'Restricted access. Hostname is not on whitelist');
+    }
+}
+
+//exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found');
+
 
 $uploaddir = realpath('./') . '/' . $options['upload-dir'] . '/';
 $uploadfile = $uploaddir . $_FILES['file']['name'];
@@ -26,7 +93,7 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
     $destination = $uploadfile . '.webp';
 
     try {
-        if (WebPConvert::convert($source, $destination, $options['convert-options'])) {
+        if (WebPConvert::convert($source, $destination, $options['webp-convert'])) {
             header('Content-type: application/octet-stream');
             echo file_get_contents($destination);
 

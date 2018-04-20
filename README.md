@@ -5,7 +5,6 @@ This way you can have a cloud service for free. You won't have to worry about li
 
 The actual conversion is handled by [webp-convert](https://github.com/rosell-dk/webp-convert/)
 
-You can configure the library in the yaml file.
 
 The script is functional, but is under construction. I expect a lot of progress the following weeks.
 
@@ -16,3 +15,12 @@ Upcoming: Protection against exploitation
 
 Upcoming:
 Error handling (JSON responses)
+
+
+## Configuration
+
+Rename `config.yaml.example` to `config.yaml`. Then edit.
+
+If you install via composer, the file is renamed automatically upon install.
+
+This approach is, btw, similar to how Laravel handles configutation files [1](https://laravel.com/docs/5.6/configuration) (although Laravel uses dotenv)

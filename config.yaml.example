@@ -1,6 +1,9 @@
 upload-dir: '.'
+allowed-ips:
+- 127.0.0.1
+- 127.0.0.1
 
-convert-options:
+webp-convert:
     quality: 80
     method: 6
     low-memory: true
