@@ -2,11 +2,14 @@ destination-dir: '../conversions'
 
 access:
     #allowed-hosts:
-    #     - playground.bitwise-it.dk
-    allowed-ips:
-        - 127.0.0.1
+    #     - bitwise-it.dk
+    #allowed-ips:
+    #    - 127.0.0.1
+
+    # The secret should match the secret on the server that calls our cloud service
     secret: 'my dog is white'
 
+# To learn about webp-convert options, go to https://github.com/rosell-dk/webp-convert
 webp-convert:
     quality: 80
     method: 6

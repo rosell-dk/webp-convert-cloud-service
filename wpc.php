@@ -7,14 +7,8 @@ require 'vendor/autoload.php';
 
 use WebPConvert\WebPConvert;
 
-//define("ERROR_CONFIGURATION", 1);
 const ERROR_SERVER_SETUP = 0;
 const ERROR_NOT_ALLOWED = 1;
-
-
-// TODO: Ensure that config.yaml will not be removed on composer update
-
-// TODO: read up on https://getcomposer.org/doc/06-config.md
 
 function exitWithError($errorCode, $msg)
 {
@@ -27,26 +21,11 @@ function exitWithError($errorCode, $msg)
     exit;
 }
 
-
 try {
     $options = \Spyc::YAMLLoad('config.yaml');
 } catch (\Exception $e) {
     exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found. Copy config.yaml.example and edit it');
 }
-
-// TODO: read this: https://cloudinary.com/blog/file_upload_with_php
-// https://www.tutorialspoint.com/php/php_file_uploading.htm
-// https://www.sitepoint.com/file-uploads-with-php/ (read "security considerations")
-// TODO: PHP upload limits etc
-
-//print_r($_POST);
-//print_r($_FILES);
-
-//echo $_SERVER['REQUEST_METHOD'];
-
-//echo $_SERVER['REMOTE_HOST'];
-//exit;
-
 
 if (isset($options['access']['allowed-ips']) && count($options['access']['allowed-ips']) > 0) {
     $ipCheckPassed = false;
@@ -79,15 +58,10 @@ if (isset($options['access']['allowed-hosts']) && count($options['access']['allo
     }
 }
 
-//exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found');
-
 $uploaddir = $options['destination-dir'] ;
 if ((substr($uploaddir, 0, 1) != '/')) {
     $uploaddir = realpath('./') . '/' . $options['destination-dir'];
 }
-
-//$uploaddir = realpath('./') . '/' . $options['destination-dir'] . '/';
-//$uploaddir = realpath($options['destination-dir']);
 
 if (!file_exists($uploaddir)) {
     // First, we have to figure out which permissions to set.
@@ -123,14 +97,7 @@ if (!isset($_POST['hash'])) {
     exitWithError(ERROR_NOT_ALLOWED, 'Restricted access. Hash required, but missing');
 }
 
-
-/*
-if ($uploaddir === false) {
-    exitWithError(ERROR_SERVER_SETUP, 'Destination directory does not exists: ' . $options['destination-dir']);
-}*/
 $uploadfile = $uploaddir . '/' . $_FILES['file']['name'];
-
-//createWritableFolder($uploadfile);
 
 if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
     // File is valid, and was successfully uploaded
@@ -139,12 +106,10 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 
 
     if (isset($options['access']['secret'])) {
-         // $options['access']['secret']
-
-        $hash = md5(md5_file($source) . $options['access']['secret']);
+         $hash = md5(md5_file($source) . $options['access']['secret']);
 
         if ($hash != $_POST['hash']) {
-            exitWithError(ERROR_NOT_ALLOWED, 'Secrets does not match');
+            exitWithError(ERROR_NOT_ALLOWED, 'Hash is incorrect. Perhaps the secrets does not match?. Hash was:' . $_POST['hash']);
         }
     }
 
@@ -152,12 +117,8 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 
     // Merge in options in $_POST, overwriting those in config.yaml
     $convertOptionsInPost = (array) json_decode($_POST['options']);
-//    print_r($_POST['options']);
-
-//    print_r($convertOptionsInPost);
-
     $convertOptions = array_merge($options['webp-convert'], $convertOptionsInPost);
-//print_r($options['webp-convert']);
+
     try {
         if (WebPConvert::convert($source, $destination, $convertOptions)) {
             header('Content-type: application/octet-stream');
