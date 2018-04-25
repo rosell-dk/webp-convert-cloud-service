@@ -3,3 +3,4 @@ composer.lock
 composer.phar
 config.yaml
 /vendor
+/conversions

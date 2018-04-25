@@ -1,7 +1,11 @@
-upload-dir: '.'
-allowed-ips:
-- 127.0.0.1
-- 127.0.0.1
+destination-dir: '../conversions'
+
+access:
+    #allowed-hosts:
+    #     - playground.bitwise-it.dk
+    allowed-ips:
+        - 127.0.0.1
+    secret: 'my dog is white'
 
 webp-convert:
     quality: 80

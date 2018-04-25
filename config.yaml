@@ -1,4 +1,4 @@
-upload-dir: '.'
+destination-dir: '../conversions'
 
 access:
     #allowed-hosts:
