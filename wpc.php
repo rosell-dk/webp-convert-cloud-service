@@ -47,6 +47,7 @@ try {
 //echo $_SERVER['REMOTE_HOST'];
 //exit;
 
+
 if (isset($options['access']['allowed-ips']) && count($options['access']['allowed-ips']) > 0) {
     $ipCheckPassed = false;
     foreach ($options['access']['allowed-ips'] as $ip) {
@@ -64,7 +65,7 @@ if (isset($options['access']['allowed-hosts']) && count($options['access']['allo
     $h = $_SERVER['REMOTE_HOST'];
     if ($h == '') {
         // Alternatively, we could catch the notice...
-        exitWithError(ERROR_SERVER_SETUP, 'WCCS is configured with allowed-hosts option. But the server is not set up to resolve host names. For example in Apache you will need HostnameLookups On inside httpd.conf. See also PHP documentation on gethostbyaddr().');
+        exitWithError(ERROR_SERVER_SETUP, 'WPC is configured with allowed-hosts option. But the server is not set up to resolve host names. For example in Apache you will need HostnameLookups On inside httpd.conf. See also PHP documentation on gethostbyaddr().');
     }
     $hostCheckPassed = false;
     foreach ($options['access']['allowed-hosts'] as $hostName) {
@@ -78,6 +79,9 @@ if (isset($options['access']['allowed-hosts']) && count($options['access']['allo
     }
 }
 
+if (!isset($_POST['hash'])) {
+    exitWithError(ERROR_NOT_ALLOWED, 'Restricted access. Hash required, but missing');
+}
 //exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found');
 
 
@@ -90,6 +94,18 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
     // File is valid, and was successfully uploaded
 
     $source = $uploadfile;
+
+
+    if (isset($options['access']['secret'])) {
+         // $options['access']['secret']
+
+        $hash = md5(md5_file($source) . $options['access']['secret']);
+
+        if ($hash != $_POST['hash']) {
+            exitWithError(ERROR_NOT_ALLOWED, 'Secrets does not match');
+        }
+    }
+
     $destination = $uploadfile . '.webp';
 
     try {
