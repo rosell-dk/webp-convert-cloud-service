@@ -108,8 +108,16 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 
     $destination = $uploadfile . '.webp';
 
+    // Merge in options in $_POST, overwriting those in config.yaml
+    $convertOptionsInPost = (array) json_decode($_POST['options']);
+//    print_r($_POST['options']);
+
+//    print_r($convertOptionsInPost);
+
+    $convertOptions = array_merge($options['webp-convert'], $convertOptionsInPost);
+//print_r($options['webp-convert']);
     try {
-        if (WebPConvert::convert($source, $destination, $options['webp-convert'])) {
+        if (WebPConvert::convert($source, $destination, $convertOptions)) {
             header('Content-type: application/octet-stream');
             echo file_get_contents($destination);
 
