@@ -7,6 +7,9 @@ access:
     #    - 127.0.0.1
 
     # The secret should match the secret on the server that calls our cloud service
+    # NOTE!!!
+    # It is not safe to store sensitive information in this file. We will find a better solution.
+    # possibly we change to use dotenv for the secret.
     secret: 'my dog is white'
 
 # To learn about webp-convert options, go to https://github.com/rosell-dk/webp-convert
