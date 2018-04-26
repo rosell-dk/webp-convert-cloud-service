@@ -75,6 +75,3 @@ else {
 
 curl_close($ch);
 ```
-
-## Roadmap
-I'm pretty satisfied with how it works now. I expect a 0.1.0 release soon.
