@@ -1,3 +1,8 @@
+# Important!
+# As this file contains sensitive information, you should NOT place it in the public webroot.
+# WPC will look for `wpc-config.yaml' in parent folders from where it is located.
+
+# Location of uploaded and converted files (relative to wpc.php). These files are not kept, but deleted immediately
 destination-dir: '../conversions'
 
 access:
@@ -7,12 +12,12 @@ access:
     #    - 127.0.0.1
 
     # The secret should match the secret on the server that calls our cloud service
-    # NOTE!!!
-    # It is not safe to store sensitive information in this file. We will find a better solution.
-    # possibly we change to use dotenv for the secret.
+    # NOTE! Make sure that this configuration file is not public available (place it in a parent folder)
     secret: 'my dog is white'
 
 # To learn about webp-convert options, go to https://github.com/rosell-dk/webp-convert
+# PS: When WPC is used as a converter with webp-convert, only the `converters` option set here will not have effect,
+#     -- the other options will be overridden in the POST call.
 webp-convert:
     quality: 80
     method: 6
@@ -25,19 +30,10 @@ webp-convert:
             options:
                 use-nice: true
 
-        - imagick
+        -
+            converter: 'imagick'
 
         -
             converter: 'gd'
             options:
                 skip-pngs: true
-
-        -
-            converter: 'ewww'
-            options:
-                key: 'key1'
-
-        -
-            converter: 'ewww'
-            options:
-                key: 'key2'

@@ -6,8 +6,9 @@ This library allows you to set up your own WebP conversion cloud service. This w
 ## Installation
 
 - Install with composer
-- Configure it by editing `config.yaml` (it is self-documented)
-
+- Rename `wpc-config.yaml.example` to `wpc-config.yaml`
+- Move `wpc-config.yaml` to a parent folder (outside of webroot)
+- Edit `wpc-config.yaml` (it is self-documented)
 
 ## Usage
 

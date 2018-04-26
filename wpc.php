@@ -21,10 +21,23 @@ function exitWithError($errorCode, $msg)
     exit;
 }
 
+$configDir = __DIR__;
+
+$parentFolders = explode('/', $configDir);
+$poppedFolders = [];
+
+while (!(file_exists(implode('/', $parentFolders) . '/wpc-config.yaml')) && count($parentFolders) > 0) {
+    array_unshift($poppedFolders, array_pop($parentFolders));
+}
+if (count($parentFolders) == 0) {
+    exitWithError(ERROR_SERVER_SETUP, 'wpc-config.yaml not found in any parent folders.');
+}
+$configFilePath = implode('/', $parentFolders) . '/wpc-config.yaml';
+
 try {
-    $options = \Spyc::YAMLLoad('config.yaml');
+    $options = \Spyc::YAMLLoad($configFilePath);
 } catch (\Exception $e) {
-    exitWithError(ERROR_SERVER_SETUP, 'config.yaml not found. Copy config.yaml.example and edit it');
+    exitWithError(ERROR_SERVER_SETUP, 'Error parsing wpc-config.yaml.');
 }
 
 if (isset($options['access']['allowed-ips']) && count($options['access']['allowed-ips']) > 0) {
