@@ -1,8 +1,11 @@
 # Important!
 # As this file contains sensitive information, you should NOT place it in the public webroot.
 # WPC will look for `wpc-config.yaml' in parent folders from where it is located.
+# You may also want to secure it by setting group owner to `www-data` and strengthening the permissions to 640. Ie:
+# - sudo chown :www-data wpc-config.yaml
+# - sudo chmod 640 wpc-config.yaml
 
-# Location of uploaded and converted files (relative to wpc.php). These files are not kept, but deleted immediately
+# Location of uploaded and converted files (relative to wpc.php). These files are not kept, but deleted immediately after conversion
 destination-dir: '../conversions'
 
 access:
