@@ -1,6 +1,6 @@
 # WebPConvert Cloud Service
 
-This library allows you to set up your own WebP conversion cloud service. This way you can have a cloud service for free. You won't have to worry about licenses expiring. And you will be completely in control of it (and downtime)
+This library allows you to set up your own WebP conversion cloud service. This way you can have a cloud service for free. You won't have to worry about licenses expiring or being stolen and abused. And you will be completely in control of it (and downtime)
 
 
 ## Installation
