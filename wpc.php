@@ -12,11 +12,11 @@ const ERROR_NOT_ALLOWED = 1;
 
 function exitWithError($errorCode, $msg)
 {
-    $returnObject = array(
+    $returnObject = [
         'success' => 0,
         'errorCode' => $errorCode,
         'errorMessage' => $msg,
-    );
+    ];
     echo json_encode($returnObject);
     exit;
 }
@@ -119,7 +119,7 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 
 
     if (isset($options['access']['secret'])) {
-         $hash = md5(md5_file($source) . $options['access']['secret']);
+        $hash = md5(md5_file($source) . $options['access']['secret']);
 
         if ($hash != $_POST['hash']) {
             exitWithError(ERROR_NOT_ALLOWED, 'Hash is incorrect. Perhaps the secrets does not match?. Hash was:' . $_POST['hash']);
