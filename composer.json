@@ -6,8 +6,7 @@
   "keywords": ["webp", "images", "cwebp", "imagick", "gd", "jpg2webp", "png2webp", "jpg", "png", "image conversion"],
   "scripts": {
     "cs-fix": "php-cs-fixer fix",
-    "cs-dry": "php-cs-fixer fix --dry-run --diff",
-    "test": "phpunit",
+    "cs-dry": "php-cs-fixer fix --dry-run --diff"
   },
   "autoload": {
     "psr-4": { "WebPConvertCS\\": "" }
@@ -20,11 +19,10 @@
     }
   ],
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^2.11",
-    "phpunit/phpunit": "5.7.27"
+    "friendsofphp/php-cs-fixer": "^2.11"
   },
   "require": {
-    "rosell-dk/webp-convert": "1.*@beta",
+    "rosell-dk/webp-convert": "^1.0.0",
     "mustangostang/spyc": "^0.6.2"
   }
 }
