@@ -76,4 +76,5 @@ else {
 curl_close($ch);
 ```
 
-The script is functional, but is under construction. I expect a lot of progress the following weeks.
+## Roadmap
+I'm pretty satisfied with how it works now. I expect a 0.1.0 release soon.
