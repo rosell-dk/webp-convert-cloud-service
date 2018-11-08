@@ -108,9 +108,19 @@ class AccessCheck
                 self::accessDenied('Invalid api key');
             } else {
                 if (isset($_POST['api-key'])) {
-                    self::accessDenied('Either api key is invalid, or you must crypt the api key (supply "api-key-crypted" and "salt" instead of simply "api-key")');
+                    self::accessDenied('Either api key is invalid, or you must crypt the api key');
                 } else {
-                    self::accessDenied('You need to supply an api key');
+                    if (isset($_POST['salt']) && isset($_POST['api-key-crypted'])) {
+                        self::accessDenied('You need to supply a valid api key');
+                    } else {
+                        if (!isset($_POST['api-key-crypted'])) {
+                            self::accessDenied('You need to supply an api key');
+                        } else {
+                            if (!isset($_POST['salt'])) {
+                                self::accessDenied('You must supply salt to go with you encripted api key');
+                            }
+                        }
+                    }
                 }
             }
         } else {
