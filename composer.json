@@ -49,7 +49,7 @@
     "squizlabs/php_codesniffer": "3.*"
   },
   "require": {
-    "rosell-dk/webp-convert": "*@dev"
+    "rosell-dk/webp-convert": "^1.2.1"
   },
   "config": {
     "sort-packages": true
