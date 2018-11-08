@@ -84,7 +84,7 @@ class WebPConvertCloudService
             self::exitWithError(self::ERROR_SERVER_SETUP, 'Could not load configuration file');
         }
 
-        $action = (isset($_POST['action']) ? $_POST['action'] : 'serve');
+        $action = (isset($_POST['action']) ? $_POST['action'] : 'convert');
 
         // Handle actions that does not require access check
 
