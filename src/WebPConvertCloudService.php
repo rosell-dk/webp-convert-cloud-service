@@ -55,7 +55,10 @@ class WebPConvertCloudService
             array_unshift($poppedFolders, array_pop($parentFolders));
         }
         if (count($parentFolders) == 0) {
-            self::exitWithError(WebPConvertCloudService::ERROR_SERVER_SETUP, 'wpc-config.yaml not found in any parent folders.');
+            self::exitWithError(
+                WebPConvertCloudService::ERROR_SERVER_SETUP,
+                'wpc-config.yaml not found in any parent folders.'
+            );
         }
         $configFilePath = implode('/', $parentFolders) . '/wpc-config.yaml';
 
@@ -106,7 +109,5 @@ class WebPConvertCloudService
                 Serve::serve($options);
                 break;
         }
-
     }
-
 }

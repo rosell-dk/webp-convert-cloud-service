@@ -55,9 +55,11 @@ class Serve
                 break;
             case UPLOAD_ERR_NO_FILE:
                 self::runtimeError('No file sent');
+                break;
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
                 self::runtimeError('Exceeded filesize limit.');
+                break;
             default:
                 self::runtimeError('Unknown error.');
         }

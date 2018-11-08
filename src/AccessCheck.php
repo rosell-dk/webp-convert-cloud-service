@@ -29,38 +29,6 @@ class AccessCheck
     {
         $accessOptions = $options['access'];
 
-/*
-        if (isset($accessOptions['allowed-ips']) && count($accessOptions['allowed-ips']) > 0) {
-            $ipCheckPassed = false;
-            foreach ($accessOptions['allowed-ips'] as $ip) {
-                if ($ip == $_SERVER['REMOTE_ADDR']) {
-                    $ipCheckPassed = true;
-                    break;
-                }
-            }
-            if (!$ipCheckPassed) {
-                self::accessDenied('Restricted access. Not on IP whitelist');
-            }
-        }
-
-        if (isset($accessOptions['allowed-hosts']) && count($accessOptions['allowed-hosts']) > 0) {
-            $h = $_SERVER['REMOTE_HOST'];
-            if ($h == '') {
-                // Alternatively, we could catch the notice...
-                $wpc->exitWithError(WebPConvertCloudService::ERROR_SERVER_SETUP, 'WPC is configured with allowed-hosts option. But the server is not set up to resolve host names. For example in Apache you will need HostnameLookups On inside httpd.conf. See also PHP documentation on gethostbyaddr().');
-            }
-            $hostCheckPassed = false;
-            foreach ($accessOptions['allowed-hosts'] as $hostName) {
-                if ($hostName == $_SERVER['REMOTE_HOST']) {
-                    $hostCheckPassed = true;
-                    break;
-                }
-            }
-            if (!$hostCheckPassed) {
-                self::accessDenied('Restricted access. Hostname is not on whitelist');
-            }
-        }
-*/
         $onWhitelist = false;
         if (isset($accessOptions['whitelist']) && count($accessOptions['whitelist']) > 0) {
             foreach ($accessOptions['whitelist'] as $whitelistItem) {
@@ -85,13 +53,14 @@ class AccessCheck
                             // Access granted!
                             return;
                         }
-
                     } else {
                         // trouble...
                     }
-
                 } else {
-                    $hashingRequired = (isset($whitelistItem['require-api-key-to-be-crypted-in-transfer']) && $whitelistItem['require-api-key-to-be-crypted-in-transfer']);
+                    $hashingRequired = (
+                        isset($whitelistItem['require-api-key-to-be-crypted-in-transfer']) &&
+                        $whitelistItem['require-api-key-to-be-crypted-in-transfer']
+                    );
                     if (!$hashingRequired && isset($_POST['api-key'])) {
                         if ($_POST['api-key'] == $whitelistItem['api-key']) {
                             // Access granted!
@@ -126,8 +95,5 @@ class AccessCheck
         } else {
             self::accessDenied('Access denied');
         }
-
     }
-
-
 }
