@@ -85,4 +85,4 @@ If you get a corrupt file, then it is probably because the output contains an er
 You will probably not need to know more of the API. But in case you do, check out [docs/api.md](https://github.com/rosell-dk/webp-convert-cloud-service/blob/master/docs/api.md)
 
 ## Mad Scientist-ware
-If you enjoy this software, feel free to conduct some secret experiments and go mad. If, you like.
+If you enjoy this software, feel free to conduct some secret experiments and go mad. If you like.
