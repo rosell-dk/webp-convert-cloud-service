@@ -18,6 +18,7 @@ composer require rosell-dk/webp-convert-cloud-service
 Here is an example to get started with:
 
 ```php
+<?php
 require 'vendor/autoload.php';
 
 use \WebPConvertCloudService\WebPConvertCloudService;
@@ -53,6 +54,7 @@ $options = [
 
 $wpc = new WebPConvertCloudService();
 $wpc->handleRequest($options);
+?>
 
 ```
 
