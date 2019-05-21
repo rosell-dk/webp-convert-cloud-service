@@ -48,8 +48,14 @@
     "phpunit/phpunit": "5.7.27",
     "squizlabs/php_codesniffer": "3.*"
   },
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/rosell-dk/webp-convert"
+      }
+  ],
   "require": {
-    "rosell-dk/webp-convert": "*@dev"
+    "rosell-dk/webp-convert": "dev-master"
   },
   "config": {
     "sort-packages": true
