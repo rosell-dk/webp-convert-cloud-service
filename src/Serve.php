@@ -119,17 +119,14 @@ class Serve
             }
 
             try {
-                if (WebPConvert::convert($source, $destination, $convertOptions)) {
-                    header('Content-type: application/octet-stream');
-                    echo file_get_contents($destination);
+                WebPConvert::convert($source, $destination, $convertOptions);
+                header('Content-type: application/octet-stream');
+                echo file_get_contents($destination);
 
-                    unlink($source);
-                    unlink($destination);
-                } else {
-                    echo 'no converters could convert the image';
-                }
+                unlink($source);
+                unlink($destination);
             } catch (\Exception $e) {
-                echo 'failed!';
+                echo 'Conversion failed!';
                 echo $e->getMessage();
             }
         } else {

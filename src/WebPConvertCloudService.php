@@ -84,7 +84,7 @@ class WebPConvertCloudService
     {
         //$this->options = static::loadConfig();
         if (!isset($options)) {
-            self::exitWithError(self::ERROR_SERVER_SETUP, 'Could not load configuration file');
+            self::exitWithError(self::ERROR_SERVER_SETUP, 'No options was supplied');
         }
 
         $action = (isset($_POST['action']) ? $_POST['action'] : 'convert');
@@ -93,7 +93,7 @@ class WebPConvertCloudService
 
         switch ($action) {
             case 'api-version':
-                echo '1';
+                echo '2';
                 exit;
         }
 
